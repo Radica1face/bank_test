@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <!-- CSS -->
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+  <title>Клиенты банка</title>
+</head>
+<body>
+<div class="container">
+
+  <div th:insert="layouts/layout :: header"></div>
+
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="row">
+        <div class="col mb-2">
+          <h2>Клиенты банка <span th:text="${bank.title}"></span></h2>
+        </div>
+
+      </div>
+      <div th:switch="${bank.getClients}">
+        <h2 th:case="null">Клиенты не найдены</h2>
+        <div th:case="*">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+              <th style="width: 20%">ФИО</th>
+              <th style="width: 10%">Телефон</th>
+              <th style="width: 10%">Email</th>
+              <th style="width: 10%">Номер паспорта</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client : ${bank.getClients}">
+              <td th:text="${client.fullName}"></td>
+              <td th:text="${client.phone}"></td>
+              <td th:text="${client.email}"></td>
+              <td th:text="${client.passportNumber}"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

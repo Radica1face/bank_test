@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <title>Клиенты</title>
+</head>
+<body>
+<div th:insert="layouts/layout :: header"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h2>График платежей</h2>
+                </div>
+            </div>
+
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th style="width: 25%">Дата платежа</th>
+                    <th style="width: 25%">Сумма платежа</th>
+                    <th style="width: 25%">Сумма гашения тела кредита</th>
+                    <th style="width: 25%">Сумма гашения процентов</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${listGraph}">
+                    <td th:text="${row.date}"></td>
+                    <td th:text="${row.amount}"></td>
+                    <td th:text="${row.principal}"></td>
+                    <td th:text="${row.percents}"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Итоговая сумма процентов по кредиту:</b></td>
+                    <td th:text="${totalInterests}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</body>
+</html>

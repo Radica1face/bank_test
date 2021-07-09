@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <title>Клиенты | Редактиовать</title>
+</head>
+<body>
+
+<div class="container">
+
+    <div th:insert="layouts/layout :: header"></div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2>Редактирование клиента</h2>
+            <form action="#" th:action="@{/client-update}" th:object="${client}" method="post">
+                <div class="form-group">
+                    <label for="id">ID</label>
+                    <input readonly type="text" th:field="*{id}" class="form-control" id="id">
+                </div>
+                <div class="form-group">
+                    <label for="name">ФИО</label>
+                    <input type="text" th:field="*{fullName}" class="form-control" id="name">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Телефон</label>
+                    <input type="text" th:field="*{phone}" class="form-control" id="phone">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" th:field="*{email}" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="passport">Номер паспорта</label>
+                    <input type="text" th:field="*{passportNumber}" class="form-control" id="passport">
+                </div>
+                <div class="form-group">
+                    <label for="bank">Банк</label>
+                    <input readonly type="text" th:field="*{bank}" class="form-control" id="bank">
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="submit" value="Сохранить">
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

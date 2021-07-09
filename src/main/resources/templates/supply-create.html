@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+  <title>Новое кредитное предложение</title>
+</head>
+<body>
+
+<div class="container">
+
+  <div th:insert="layouts/layout :: header"></div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2>Новое кредитное предложение</h2>
+      <form action="#" th:action="@{/supply-create}" method="post" th:object="${creditSupply}">
+        <div class="form-group">
+          <label for="limit">Лимит по кредиту</label>
+          <select name="creditId" class="form-control" id="limit">
+            <option th:each="credit : ${credits}"
+                    th:text="${credit.creditLimit}"
+                    th:value="${credit.id}">
+            </option>
+          </select>
+
+        </div>
+        <div class="form-group">
+          <label for="passport">Клиент (Номер паспорта)</label>
+          <select name="clientId" class="form-control" id="passport">
+            <option th:each="client : ${clients}"
+                    th:text="${client.passportNumber}"
+                    th:value="${client.id}">
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="loanMoney">Сумма кредита</label>
+          <input type="text" name="loanMoney" class="form-control" id="loanMoney">
+        </div>
+        <div class="form-group">
+          <label for="years">Срок кредитования</label>
+          <input type="text" name="years" class="form-control" id="years">
+        </div>
+        <div class="form-group">
+          <label for="date">Планируемая дата платежа</label>
+          <input type="date" name="date" class="form-control" id="date">
+        </div>
+        <br>
+        <div class="form-group">
+          <input type="submit" value="Сохранить">
+        </div>
+      </form>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

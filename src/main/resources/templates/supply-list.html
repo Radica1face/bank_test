@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <!-- CSS -->
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+  <title>Кредитные предложения</title>
+</head>
+<body>
+<div class="container">
+
+  <div th:insert="layouts/layout :: header"></div>
+
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="row">
+        <div class="col mb-2">
+          <h2>Кредитные предложения</h2>
+        </div>
+        <div class="col">
+          <p style="float:right;"><a href="/supply-create" class="btn btn-success">Новое кредитное предложение</a></p>
+        </div>
+      </div>
+      <div th:switch="${supplies}">
+        <h2 th:case="null">Нет оформленных предложений</h2>
+        <div th:case="*">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+              <th>ФИО</th>
+              <th>Сумма кредита</th>
+              <th>Процентная ставка</th>
+              <th>График</th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="supply : ${supplies}">
+              <td th:text="${supply.client.fullName}"></td>
+              <td th:text="${supply.loanMoney}"></td>
+              <td th:text="${supply.credit.interestRate}"></td>
+              <td><a th:href="@{show-graph/{id}(id=${supply.id})}">Показать график платежей</a></td>
+              <td><a  th:href="@{supply-update/{id}(id=${supply.id})}" class="btn btn-primary">Редактировать</a></td>
+              <td><a th:href="@{supply-delete/{id}(id=${supply.id})}" class="btn btn-danger">Удалить</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

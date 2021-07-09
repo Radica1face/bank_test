@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <!-- CSS -->
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+  <title>Банки</title>
+</head>
+<body>
+<div class="container">
+
+  <div th:insert="layouts/layout :: header"></div>
+
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="row">
+        <div class="col mb-2">
+          <h2>Банки</h2>
+        </div>
+        <div class="col">
+          <p style="float:right;"><a href="/bank-create" class="btn btn-success">Добавить банк</a></p>
+        </div>
+      </div>
+      <div th:switch="${banks}">
+        <h2 th:case="null">Банки не найдены</h2>
+        <div th:case="*">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+              <th style="width: 30%">Наименование</th>
+              <th style="width: 10%"></th>
+              <th style="width: 10%"></th>
+              <th style="width: 10%"></th>
+              <th style="width: 10%"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bank : ${banks}">
+              <td th:text="${bank.title}"></td>
+              <td><a  th:href="@{show-clients/{id}(id=${bank.id})}">клиенты банка</a></td>
+              <td><a  th:href="@{show-credits/{id}(id=${bank.id})}">кредиты банка</a></td>
+              <td><a  th:href="@{bank-update/{id}(id=${bank.id})}" class="btn btn-primary">Редактировать</a></td>
+              <td><a th:href="@{bank-delete/{id}(id=${bank.id})}" class="btn btn-danger">Удалить</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

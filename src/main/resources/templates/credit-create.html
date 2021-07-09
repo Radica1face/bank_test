@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+  <title>Клиенты | Новый</title>
+</head>
+<body>
+<div class="container">
+
+  <div th:insert="layouts/layout :: header"></div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2>Новый кредит</h2>
+      <form action="#" th:action="@{/credit-create}" th:object="${credit}" method="post">
+        <div class="form-group">
+          <label for="creditLimit">Лимит по кредиту</label>
+          <input type="text" th:field="*{creditLimit}" class="form-control" id="creditLimit">
+        </div>
+        <div class="form-group">
+          <label for="interestRate">Процентная ставка</label>
+          <input type="text" th:field="*{interestRate}" class="form-control" id="interestRate">
+        </div>
+        <div class="form-group">
+          <label for="bank">Выберите банк</label>
+          <select name="bank" th:field="*{bank}" class="form-control" id="bank">
+            <option th:each="bank : ${banks}"
+                    th:text="${bank.title}"
+                    th:value="${bank.id}">
+            </option>
+          </select>
+        </div>
+        <br>
+        <div class="form-group">
+          <input type="submit" value="Сохранить">
+        </div>
+      </form>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

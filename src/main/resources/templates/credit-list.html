@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <title>Кредиты</title>
+</head>
+<body>
+<div class="container">
+
+    <div th:insert="layouts/layout :: header"></div>
+
+<div class="row justify-content-center">
+    <div class="col">
+        <div class="row">
+            <div class="col mb-2">
+                <h2>Кредиты</h2>
+            </div>
+            <div class="col">
+                <p style="float:right;"><a href="/credit-create" class="btn btn-success">Новый кредит</a></p>
+            </div>
+        </div>
+        <div th:switch="${credits}">
+            <h4 th:case="null">Кредиты не найдены</h4>
+            <div th:case="*">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Лимит по кредиту</th>
+                        <th>Процентная ставка</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="credit : ${credits}">
+                        <td th:text="${credit.creditLimit}"></td>
+                        <td th:text="${credit.interestRate}"></td>
+                        <td><a  th:href="@{credit-update/{id}(id=${credit.id})}" class="btn btn-primary">Редактировать</a></td>
+                        <td><a th:href="@{credit-delete/{id}(id=${credit.id})}" class="btn btn-danger">Удалить</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

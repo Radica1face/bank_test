@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <title>Клиенты</title>
+</head>
+<body>
+<div class="container">
+
+    <div th:insert="layouts/layout :: header"></div>
+
+<div class="row justify-content-center">
+    <div class="col">
+        <div class="row">
+            <div class="col mb-2">
+                <h2>Клиенты</h2>
+            </div>
+            <div class="col">
+                <p style="float:right;"><a href="/client-create" class="btn btn-success">Новый клиент</a></p>
+            </div>
+        </div>
+        <div th:switch="${clients}">
+            <h2 th:case="null">Клиенты не найдены</h2>
+            <div th:case="*">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="width: 25%">ФИО</th>
+                                <th style="width: 20%">Телефон</th>
+                                <th style="width: 10%">Email</th>
+                                <th style="width: 15%">Номер паспорта</th>
+                                <th style="width: 10%"></th>
+                                <th style="width: 10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="client : ${clients}">
+                                <td th:text="${client.fullName}"></td>
+                                <td th:text="${client.phone}"></td>
+                                <td th:text="${client.email}"></td>
+                                <td th:text="${client.passportNumber}"></td>
+                                <td><a  th:href="@{client-update/{id}(id=${client.id})}" class="btn btn-primary">Редактировать</a></td>
+                                <td><a th:href="@{client-delete/{id}(id=${client.id})}" class="btn btn-danger">Удалить</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
