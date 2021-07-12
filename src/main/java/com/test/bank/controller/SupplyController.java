@@ -1,6 +1,7 @@
 package com.test.bank.controller;
 
 import com.test.bank.business.PaymentGraph;
+import com.test.bank.entity.Bank;
 import com.test.bank.entity.Client;
 import com.test.bank.entity.Credit;
 import com.test.bank.entity.CreditSupply;
@@ -11,9 +12,10 @@ import com.test.bank.service.CreditSupplyService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -40,30 +42,37 @@ public class SupplyController {
     }
 
     @PostMapping("/supply-create")
-    public String createSupply(@RequestParam UUID clientId,
-                               @RequestParam UUID creditId,
-                               @RequestParam Double loanMoney,
-                               @RequestParam Integer years,
-                               @RequestParam String date,
-                               Model model) throws ParseException {
+    public String createSupply(@Valid CreditSupply creditSupply,
+                               BindingResult bindingResult,
+                               Model model) {
 
-        Client client = clientService.findById(clientId);
-        Credit credit = creditService.findById(creditId);
+        if(bindingResult.hasErrors()) {
+            List<Client> clients = clientService.findAll();
+            model.addAttribute("clients", clients);
+            List<Credit> credits = creditService.findAll();
+            model.addAttribute("credits", credits);
+            return "supply-create";
+        } else {
+            Credit credit = creditSupply.getCredit();
 
-        Double yIns = credit.getInterestRate();
-        PaymentGraph paymentGraph = new PaymentGraph();
-        List<RowGraph> listGraph = paymentGraph.makeGraph(yIns, loanMoney, years, date);
+            Double yIns = credit.getInterestRate();
+            PaymentGraph paymentGraph = new PaymentGraph();
+            List<RowGraph> listGraph = paymentGraph.makeGraph(yIns,
+                    creditSupply.getLoanMoney(),
+                    creditSupply.getYears(),
+                    creditSupply.getDate());
 
-        Double totalInterests = paymentGraph.getTotalInterests();
+            Double totalInterests = paymentGraph.getTotalInterests();
 
-        CreditSupply creditSupply = new CreditSupply(client, credit, loanMoney, years, date);
+            creditSupplyService.saveSupply(creditSupply);
 
-        creditSupplyService.saveSupply(creditSupply);
+            model.addAttribute("listGraph", listGraph);
+            model.addAttribute("totalInterests", totalInterests);
 
-        model.addAttribute("listGraph", listGraph);
-        model.addAttribute("totalInterests", totalInterests);
+            return "show-graph";
+        }
 
-        return "show-graph";
+
     }
 
     @GetMapping("/supply-update/{id}")
@@ -78,9 +87,17 @@ public class SupplyController {
     }
 
     @PostMapping("/supply-update")
-    public String updateSupply(CreditSupply creditSupply) {
-        creditSupplyService.saveSupply(creditSupply);
-        return "redirect:/supplies";
+    public String updateSupply(@Valid CreditSupply creditSupply, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            List<Client> clients = clientService.findAll();
+            List<Credit> credits = creditService.findAll();
+            model.addAttribute("clients", clients);
+            model.addAttribute("credits", credits);
+            return "supply-update";
+        } else {
+            creditSupplyService.saveSupply(creditSupply);
+            return "redirect:/supplies";
+        }
     }
 
     @GetMapping("/supply-delete/{id}")

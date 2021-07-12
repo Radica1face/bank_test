@@ -6,6 +6,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -20,18 +23,27 @@ public class Client {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
+
+
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
+    @NotEmpty(message = "Полное имя не должно быть пустым")
+    @Size(min = 5, max = 100, message = "Полное имя должно быть не менее 5 и не более 100 символов")
     @Column(name = "fullname")
     private String fullName;
 
+    @NotEmpty(message = "Номер телефона не должен быть пустым")
+    @Size(min = 11, max = 11, message = "Номер телефона должен состоять из 11 цифр")
     @Column(name = "phone_number")
     private String phone;
 
+    @Email(message = "Email должен быть действительным")
     @Column(name = "email")
     private String email;
 
+    @NotEmpty(message = "Номер паспорта не должен быть пустым")
+    @Size(min = 10, max = 10, message = "Номер паспорта должен состоять из 10 цифр")
     @Column(name = "passport_number")
     private String passportNumber;
 

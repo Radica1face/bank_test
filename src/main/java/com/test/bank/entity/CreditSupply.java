@@ -7,6 +7,9 @@ import org.hibernate.annotations.TypeDef;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -31,11 +34,17 @@ public class CreditSupply {
     @JoinColumn (name="credit_id")
     private Credit credit;
 
+    @NotNull(message = "Поле не должно быть пустым")
+    @Min(value = 10000, message = "Сумма кредита не менее 10 000")
+    @Max(value = 10000000, message = "Сумма кредита не более 10 000 000")
     @Column(name = "loan_money")
-    private Double loanMoney;
+    private double loanMoney;
 
+    @NotNull(message = "Поле не должно быть пустым")
+    @Min(value = 1, message = "Период кредитования не менее 1 года")
+    @Max(value = 30, message = "Период кредитования не более 30 лет")
     @Column(name = "years")
-    private Integer years;
+    private int years;
 
     @Column(name = "date")
     private String date;
@@ -72,19 +81,19 @@ public class CreditSupply {
         this.credit = credit;
     }
 
-    public Double getLoanMoney() {
+    public double getLoanMoney() {
         return loanMoney;
     }
 
-    public void setLoanMoney(Double loanMoney) {
+    public void setLoanMoney(double loanMoney) {
         this.loanMoney = loanMoney;
     }
 
-    public Integer getYears() {
+    public int getYears() {
         return years;
     }
 
-    public void setYears(Integer years) {
+    public void setYears(int years) {
         this.years = years;
     }
 

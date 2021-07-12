@@ -22,18 +22,22 @@
                 <div class="form-group">
                     <label for="name">ФИО</label>
                     <input type="text" th:field="*{fullName}" class="form-control" id="name">
+                    <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="phone">Телефон</label>
                     <input type="text" th:field="*{phone}" class="form-control" id="phone">
+                    <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="text" th:field="*{email}" class="form-control" id="email">
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="passport">Номер паспорта</label>
                     <input type="text" th:field="*{passportNumber}" class="form-control" id="passport">
+                    <div th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="bank">Банк</label>

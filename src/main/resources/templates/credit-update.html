@@ -21,10 +21,12 @@
                 <div class="form-group">
                     <label for="creditLimit">Лимит по кредиту</label>
                     <input type="text" th:field="*{creditLimit}" class="form-control" id="creditLimit">
+                    <div th:if="${#fields.hasErrors('creditLimit')}" th:errors="*{creditLimit}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="interestRate">Процентная ставка</label>
                     <input type="text" th:field="*{interestRate}" class="form-control" id="interestRate">
+                    <div th:if="${#fields.hasErrors('interestRate')}" th:errors="*{interestRate}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="bank">Банк</label>

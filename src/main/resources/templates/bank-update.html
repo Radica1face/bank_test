@@ -21,6 +21,7 @@
         <div class="form-group">
           <label for="title">Наименование</label>
           <input type="text" th:field="*{title}" class="form-control" id="title">
+          <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red;"></div>
         </div>
         <br>
         <div class="form-group">

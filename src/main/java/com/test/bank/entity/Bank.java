@@ -6,6 +6,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -24,6 +26,8 @@ public class Bank {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
+    @NotEmpty(message = "Наименование не должно быть пустым")
+    @Size(min = 3, max = 50, message = "Количество символов от 3 до 50")
     @Column(name = "title")
     private String title;
 

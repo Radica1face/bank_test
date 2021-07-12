@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -23,11 +24,17 @@ public class Credit {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
+    @NotNull(message = "Поле не должно быть пустым")
+    @Min(value = 10000, message = "Лимит по кредиту не менее 10 000")
+    @Max(value = 10000000, message = "Лимит по кредиту не более 10 000 000")
     @Column(name = "credit_limit")
-    private Integer creditLimit;
+    private int creditLimit;
 
+    @NotNull(message = "Поле не должно быть пустым")
+    @Min(value = 1, message = "Процентная ставка от 1%")
+    @Max(value = 50, message = "Процентная ставка до 50%")
     @Column(name = "interest_rate")
-    private Double interestRate;
+    private double interestRate;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToOne (cascade=CascadeType.ALL)
@@ -45,19 +52,19 @@ public class Credit {
         this.id = id;
     }
 
-    public Integer getCreditLimit() {
+    public int getCreditLimit() {
         return creditLimit;
     }
 
-    public void setCreditLimit(Integer creditLimit) {
+    public void setCreditLimit(int creditLimit) {
         this.creditLimit = creditLimit;
     }
 
-    public Double getInterestRate() {
+    public double getInterestRate() {
         return interestRate;
     }
 
-    public void setInterestRate(Double interestRate) {
+    public void setInterestRate(double interestRate) {
         this.interestRate = interestRate;
     }
 

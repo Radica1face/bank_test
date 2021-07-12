@@ -16,8 +16,12 @@
             <h2>Редактировать кредитное предложение</h2>
             <form action="#" th:action="@{/supply-create}" method="post" th:object="${creditSupply}">
                 <div class="form-group">
+                    <label for="id">ID</label>
+                    <input readonly type="text" th:field="*{id}" class="form-control" id="id">
+                </div>
+                <div class="form-group">
                     <label for="limit">Лимит по кредиту</label>
-                    <select name="creditId" class="form-control" id="limit">
+                    <select th:field="*{credit}" class="form-control" id="limit">
                         <option th:each="credit : ${credits}"
                                 th:text="${credit.creditLimit}"
                                 th:value="*{credit.id}">
@@ -27,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label for="passport">Клиент (Номер паспорта)</label>
-                    <select name="clientId" class="form-control" id="passport">
+                    <select th:field="*{client}" class="form-control" id="passport">
                         <option th:each="client : ${clients}"
                                 th:text="${client.passportNumber}"
                                 th:value="*{client.id}">
@@ -37,10 +41,12 @@
                 <div class="form-group">
                     <label for="loanMoney">Сумма кредита</label>
                     <input type="text" th:field="*{loanMoney}" name="loanMoney" class="form-control" id="loanMoney">
+                    <div th:if="${#fields.hasErrors('loanMoney')}" th:errors="*{loanMoney}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="years">Срок кредитования</label>
                     <input type="text" th:field="*{years}" name="years" class="form-control" id="years">
+                    <div th:if="${#fields.hasErrors('years')}" th:errors="*{years}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="date">Планируемая дата платежа</label>

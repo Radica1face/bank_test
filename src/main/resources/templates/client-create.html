@@ -16,21 +16,23 @@
             <form action="#" th:action="@{/client-create}" th:object="${client}" method="post">
                 <div class="form-group">
                     <label for="name">ФИО</label>
-                    <input type="text" th:field="*{fullName}" class="form-control" id="name">
+                    <input type="text" th:field="*{fullName}" class="form-control" id="name" placeholder="Иванов Иван Иванович">
+                    <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="phone">Телефон</label>
-                    <input type="text" th:field="*{phone}" class="form-control" id="phone">
+                    <input type="text" th:field="*{phone}" class="form-control" id="phone" placeholder="89991234567">
+                    <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" th:field="*{email}" class="form-control" id="email"
-                           autocomplete="off" data-inputmask="'alias': 'email'">
+                    <input type="text" th:field="*{email}" class="form-control" id="email" placeholder="example@mail.ru">
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="passport">Номер паспорта</label>
-                    <input type="text" th:field="*{passportNumber}" class="form-control" id="passport"
-                           autocomplete="off" data-inputmask="'mask': '99 99 999999'">
+                    <input type="text" th:field="*{passportNumber}" class="form-control" id="passport" placeholder="6758493012">
+                    <div th:if="${#fields.hasErrors('passportNumber')}" th:errors="*{passportNumber}" style="color:red;"></div>
                 </div>
                 <div class="form-group">
                     <label for="bank">Выберите банк</label>
