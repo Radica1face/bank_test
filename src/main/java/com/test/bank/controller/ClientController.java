@@ -22,6 +22,11 @@ public class ClientController {
     private final ClientService clientService;
     private final BankService bankService;
 
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/clients";
+    }
+
     @GetMapping("/clients")
     public String findAll(Model model) {
         List<Client> allClients = clientService.findAll();
