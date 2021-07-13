@@ -1,0 +1,40 @@
+
+CREATE TABLE clients(
+  	id UUID NOT NULL,
+	fullname VARCHAR(100) NOT NULL,
+	phone_number VARCHAR(15) NOT NULL,
+	email VARCHAR(50),
+	passport_number VARCHAR(15) NOT NULL UNIQUE,
+	bank_id UUID NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS credits (
+  	id UUID NOT NULL, 
+  	credit_limit INT NOT NULL,
+  	interest_rate  DOUBLE NOT NULL,
+	bank_id UUID NOT NULL,
+	PRIMARY KEY (id)
+	)
+	
+CREATE TABLE IF NOT EXISTS banks (
+	id UUID NOT NULL,
+	title VARCHAR(100) NOT NULL,
+	client_id UUID, 
+	credit_id UUID,
+	PRIMARY KEY (id),
+	FOREIGN KEY (client_id) REFERENCES clients(id),
+	FOREIGN KEY (credit_id) REFERENCES credits(id)	
+)	
+
+CREATE TABLE IF NOT EXISTS supplies (
+  	id UUID NOT NULL,
+  	client_id UUID,
+  	credit_id UUID,
+	loan_money DOUBLE,	
+	years INT,
+	date VARCHAR(30),
+	PRIMARY KEY (id),
+	FOREIGN KEY (client_id) REFERENCES clients(id),
+	FOREIGN KEY (credit_id) REFERENCES credits(id)	
+	)
